@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Perfil del Broer</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <h1 class="title">Stats de los Broers</h1>
+
+  <div id="profile-container" class="profile-container">
+    <!-- Data will be injected here -->
+  </div>
+
+  <div style="text-align: center;">
+      <a href="index.html" class="back-btn">⬅ Volver a la selección</a>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script>
+    // Get ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const broeId = urlParams.get('id'); // Get as string
+
+    // Find Broe
+    const broe = broesData.find(b => b.id === broeId);
+
+    const container = document.getElementById('profile-container');
+
+    if (broe) {
+      const themeColor = broe.themeColor || '#00ffcc';
+      
+      container.innerHTML = `
+        <div class="profile-header" style="--bro-color: ${themeColor}">
+            <div class="profile-avatar">
+            <img src="${broe.avatar}" alt="${broe.name}" onerror="this.src='https://via.placeholder.com/350/111/FFFFFF?text=${broe.name}'">
+            </div>
+            <div class="profile-info">
+            <div class="profile-name">${broe.name}</div>
+            </div>
+        </div>
+
+        <div class="no-stats-container">
+            <div class="no-stats-message">
+                🚫 No hay stats disponibles
+            </div>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div style="text-align: center; width: 100%;">
+            <h2>❌ Broer no encontrado</h2>
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+</html>
